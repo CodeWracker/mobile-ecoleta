@@ -23,6 +23,7 @@ interface Item {
 interface Point {
   id: number;
   image: string;
+  image_url: string;
   name: string;
   latitude: number;
   longitude: number;
@@ -56,14 +57,12 @@ const Points = () => {
         },
       })
       .then((response) => {
-        console.log(response.data[0].image);
-
         setPoints(
-          response.data.map((local) => {
+          response.data.map((local: Point) => {
             local.image === "image-null"
               ? (local.image =
                   "https://images.unsplash.com/photo-1553451166-232112bda6f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60")
-              : {};
+              : (local.image = local.image_url);
             return local;
           })
         );
@@ -99,6 +98,8 @@ const Points = () => {
     navigation.goBack();
   }
   function handleNavigateToDetail(id: number) {
+    console.log(id);
+
     navigation.navigate("Detail", { point_id: id });
   }
   return (
@@ -134,6 +135,7 @@ const Points = () => {
                   }}
                 >
                   <View style={styles.mapMarkerContainer}>
+                    {console.log(point.image_url)}
                     <Image
                       style={styles.mapMarkerImage}
                       source={{

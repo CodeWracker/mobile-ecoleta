@@ -24,6 +24,7 @@ interface Data {
   }[];
   point: {
     image: string;
+    image_url: string;
     name: string;
     email: string;
     whatsapp: string;
@@ -39,6 +40,8 @@ const Detail = () => {
   const [data, setData] = useState<Data>({} as Data);
 
   useEffect(() => {
+    console.log("request");
+
     api.get(`points/${routeParams.point_id}`).then((response) => {
       setData(response.data);
     });
@@ -76,7 +79,7 @@ const Detail = () => {
             uri:
               data.point.image === "image-null"
                 ? "https://images.unsplash.com/photo-1553451166-232112bda6f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60"
-                : data.point.image,
+                : data.point.image_url,
           }}
         />
         <Text style={styles.pointName}>{data.point.name}</Text>
